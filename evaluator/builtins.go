@@ -3,7 +3,7 @@ package evaluator
 import "monkey-ball/object"
 
 var builtins = map[string]*object.Builtin{
-	"len": &object.Builtin{
+	"len": {
 		Fn: func(args ...object.Object) object.Object {
 			if len(args) != 1 {
 				return newError("wrong number of args. got=%d want=1",
