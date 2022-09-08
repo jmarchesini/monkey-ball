@@ -1,6 +1,7 @@
 # monkey-ball
 
-The interpreter from Thorsten Ball's [Writing An Interpreter In Go](https://interpreterbook.com/).
+The interpreter from Thorsten Ball's [Writing An Interpreter In Go](https://interpreterbook.com/), 
+and the compiler and VM from [Writing a Compiler In Go](https://compilerbook.com/)
 
 Samples from the unit tests:
 ```
