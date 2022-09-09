@@ -61,6 +61,7 @@ func runCompilerTests(t *testing.T, tests []compilerTestCase) {
 // //////////////////////////////////////////////// //
 // ==================== Helpers =================== //
 // //////////////////////////////////////////////// //
+
 func parse(input string) *ast.Program {
 	l := lexer.New(input)
 	p := parser.New(l)
