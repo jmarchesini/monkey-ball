@@ -15,5 +15,5 @@ func main() {
 	}
 
 	fmt.Printf("Hello %s, welcome to monkey.\n", user.Username)
-	repl.Start(os.Stdin, os.Stdout)
+	repl.StartCompiler(os.Stdin, os.Stdout)
 }
