@@ -226,7 +226,7 @@ if (10 > 1) {
 		},
 		{
 			`{"name": "Monkey"}[fn(x) { x }];`,
-			"unusable as hash key: FUNCTION",
+			"unusable as a hash key: FUNCTION",
 		},
 		{
 			`999[1]`,
