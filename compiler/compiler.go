@@ -51,6 +51,10 @@ func (c *Compiler) Compile(node ast.Node) error {
 			}
 		}
 
+	// //////////////////////////////////////////////// //
+	// ================== Expressions ================= //
+	// //////////////////////////////////////////////// //
+
 	case *ast.ExpressionStatement:
 		err := c.Compile(node.Expression)
 		if err != nil {
@@ -101,21 +105,6 @@ func (c *Compiler) Compile(node ast.Node) error {
 			c.emit(code.OpNotEqual)
 		default:
 			return fmt.Errorf("unknown infix operator: %s", node.Operator)
-		}
-
-	case *ast.IntegerLiteral:
-		integer := &object.Integer{Value: node.Value}
-		c.emit(code.OpConstant, c.addConstant(integer))
-
-	case *ast.StringLiteral:
-		str := &object.String{Value: node.Value}
-		c.emit(code.OpConstant, c.addConstant(str))
-
-	case *ast.Boolean:
-		if node.Value {
-			c.emit(code.OpTrue)
-		} else {
-			c.emit(code.OpFalse)
 		}
 
 	case *ast.PrefixExpression:
@@ -173,6 +162,31 @@ func (c *Compiler) Compile(node ast.Node) error {
 		afterAlternativePos := len(c.instructions)
 		c.changeOperand(jumpPos, afterAlternativePos)
 
+	// //////////////////////////////////////////////// //
+	// =================== Literals =================== //
+	// //////////////////////////////////////////////// //
+
+	case *ast.IntegerLiteral:
+		integer := &object.Integer{Value: node.Value}
+		c.emit(code.OpConstant, c.addConstant(integer))
+
+	case *ast.StringLiteral:
+		str := &object.String{Value: node.Value}
+		c.emit(code.OpConstant, c.addConstant(str))
+
+	case *ast.ArrayLiteral:
+		for _, el := range node.Elements {
+			err := c.Compile(el)
+			if err != nil {
+				return err
+			}
+		}
+		c.emit(code.OpArray, len(node.Elements))
+
+	// //////////////////////////////////////////////// //
+	// ================= Statements =================== //
+	// //////////////////////////////////////////////// //
+
 	case *ast.BlockStatement:
 		for _, s := range node.Statements {
 			err := c.Compile(s)
@@ -189,6 +203,10 @@ func (c *Compiler) Compile(node ast.Node) error {
 		symbol := c.symbolTable.Define(node.Name.Value)
 		c.emit(code.OpSetGlobal, symbol.Index)
 
+	// //////////////////////////////////////////////// //
+	// ================= Identifiers ================== //
+	// //////////////////////////////////////////////// //
+
 	case *ast.Identifier:
 		symbol, ok := c.symbolTable.Resolve(node.Value)
 		if !ok {
@@ -196,6 +214,16 @@ func (c *Compiler) Compile(node ast.Node) error {
 		}
 		c.emit(code.OpGetGlobal, symbol.Index)
 
+	// //////////////////////////////////////////////// //
+	// ================== Integrals =================== //
+	// //////////////////////////////////////////////// //
+
+	case *ast.Boolean:
+		if node.Value {
+			c.emit(code.OpTrue)
+		} else {
+			c.emit(code.OpFalse)
+		}
 	}
 
 	return nil
