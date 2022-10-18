@@ -1,28 +1,32 @@
 # monkey-ball
 
-The interpreter from Thorsten Ball's [Writing An Interpreter In Go](https://interpreterbook.com/) 
-and the compiler and VM from [Writing a Compiler In Go](https://compilerbook.com/)
+An implementation of the Thorsten Ball's Monkey language that comes from the following sources:
+- [Writing An Interpreter In Go](https://interpreterbook.com/) 
+- [Writing a Compiler In Go](https://compilerbook.com/)
+- [The Lost Chapter](https://interpreterbook.com/lost/)
 
-Samples from the unit tests:
+Samples of the Monkey language from the unit tests and run in the REPL:
+
+#### Expressions ####
 ```
-### Expressions ###
-
 >> (5 + 10 * 2 + 15 / 3) * 2 + -10
 50
 
 >> if (1 < 2) { 10 } else { 20 }
 10
+```
 
-### Statements ###
-
+#### Statements ####
+```
 >> let a = 5;
 >> let b = a;
 >> let c = a + b + 5;
 >> c;
 15
+```
 
-### Functions and Closures ###
-
+#### Functions and Closures ####
+```
 >> let add = fn(x, y) { x + y; };
 >> add(5, 5);
 10
@@ -34,9 +38,10 @@ Samples from the unit tests:
 >> let addTwo = newAdder(2);
 >> addTwo(7);
 9
+```
 
-### Arrays and Builtins ###
-
+#### Arrays and Builtins ####
+```
 >> len("hello world")
 11
 
@@ -58,9 +63,10 @@ Samples from the unit tests:
 
 >> push(a, 4)
 [1, 2, 3, 4]
+```
 
-### Hashes ###
-
+#### Hashes ####
+```
 >> let h = {"foo": 4, "bar": 3 + 2, "foo" + "bar": len("foobar")};
 >> h["foo"]
 4
