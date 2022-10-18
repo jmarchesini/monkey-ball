@@ -25,7 +25,7 @@ Samples of the Monkey language from the unit tests and run in the REPL:
 15
 ```
 
-#### Functions and Closures ####
+#### Functions, Scopes, and Closures ####
 ```
 >> let add = fn(x, y) { x + y; };
 >> add(5, 5);
@@ -38,6 +38,12 @@ Samples of the Monkey language from the unit tests and run in the REPL:
 >> let addTwo = newAdder(2);
 >> addTwo(7);
 9
+
+>> let globalSeed = 50;
+>> let minusOne = fn() { let num = 1; globalSeed - num; }
+>> let minusTwo = fn() { let num = 2; globalSeed - num; }
+>> minusOne() + minusTwo()
+97
 ```
 
 #### Arrays and Builtins ####
