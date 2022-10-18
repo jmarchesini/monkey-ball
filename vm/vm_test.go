@@ -240,6 +240,16 @@ func TestFirstClassFunction(t *testing.T) {
 			`,
 			expected: 1,
 		},
+		{
+			input: `
+			let returnsOneReturner = fn() {
+				let returnsOne = fn() { 1; };
+				returnsOne;
+			};
+			returnsOneReturner()();
+			`,
+			expected: 1,
+		},
 	}
 
 	runVmTests(t, tests)
@@ -288,7 +298,7 @@ func TestCallingFunctionWithBindings(t *testing.T) {
 				let num = 2;
 				globalSeed - num;
 			}
-			minusOne() + minusTwo();
+			minusOne() + minusTwo()
 			`,
 			expected: 97,
 		},
