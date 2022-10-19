@@ -40,9 +40,9 @@ Samples of the Monkey language from the unit tests and run in the REPL:
 9
 
 >> let globalSeed = 50;
->> let minusOne = fn() { let num = 1; globalSeed - num; }
->> let minusTwo = fn() { let num = 2; globalSeed - num; }
->> minusOne() + minusTwo()
+>> let minusOne = fn() { let num = 1; globalSeed - num; };
+>> let minusTwo = fn() { let num = 2; globalSeed - num; };
+>> minusOne() + minusTwo();
 97
 ```
 
