@@ -28,11 +28,13 @@ const (
 	ARRAY_OBJ             = "ARRAY"
 	HASH_OBJ              = "HASH"
 	COMPILED_FUNCTION_OBJ = "COMPILED_FUNCTION_OBJ"
+	CLOSURE_OBJ           = "CLOSURE"
 )
 
 // //////////////////////////////////////////////// //
 // ==================== Integer =================== //
 // //////////////////////////////////////////////// //
+
 type Integer struct {
 	Value int64
 }
@@ -48,6 +50,7 @@ func (i *Integer) Type() ObjectType {
 // //////////////////////////////////////////////// //
 // ==================== Boolean =================== //
 // //////////////////////////////////////////////// //
+
 type Boolean struct {
 	Value bool
 }
@@ -63,6 +66,7 @@ func (b *Boolean) Type() ObjectType {
 // //////////////////////////////////////////////// //
 // ====================== Null ==================== //
 // //////////////////////////////////////////////// //
+
 type Null struct{}
 
 func (n *Null) Inspect() string {
@@ -76,6 +80,7 @@ func (n *Null) Type() ObjectType {
 // //////////////////////////////////////////////// //
 // ==================== Return ==================== //
 // //////////////////////////////////////////////// //
+
 type ReturnValue struct {
 	Value Object
 }
@@ -91,6 +96,7 @@ func (rv *ReturnValue) Inspect() string {
 // //////////////////////////////////////////////// //
 // ===================== Error ==================== //
 // //////////////////////////////////////////////// //
+
 type Error struct {
 	Message string
 }
@@ -106,6 +112,7 @@ func (e *Error) Inspect() string {
 // //////////////////////////////////////////////// //
 // =================== Function =================== //
 // //////////////////////////////////////////////// //
+
 type Function struct {
 	Parameters []*ast.Identifier
 	Body       *ast.BlockStatement
@@ -138,6 +145,7 @@ func (f *Function) Inspect() string {
 // //////////////////////////////////////////////// //
 // ==================== String ==================== //
 // //////////////////////////////////////////////// //
+
 type String struct {
 	Value string
 }
@@ -153,6 +161,7 @@ func (s *String) Inspect() string {
 // //////////////////////////////////////////////// //
 // =================== Builtins =================== //
 // //////////////////////////////////////////////// //
+
 type BuiltinFunction func(args ...Object) Object
 
 type Builtin struct {
@@ -170,6 +179,7 @@ func (b *Builtin) Inspect() string {
 // //////////////////////////////////////////////// //
 // ===================== Array ==================== //
 // //////////////////////////////////////////////// //
+
 type Array struct {
 	Elements []Object
 }
@@ -197,6 +207,7 @@ func (ao *Array) Inspect() string {
 // //////////////////////////////////////////////// //
 // =================== HashKey ==================== //
 // //////////////////////////////////////////////// //
+
 type HashKey struct {
 	Type  ObjectType
 	Value uint64
@@ -228,6 +239,7 @@ func (s *String) HashKey() HashKey {
 // //////////////////////////////////////////////// //
 // ===================== Hash ===================== //
 // //////////////////////////////////////////////// //
+
 type HashPair struct {
 	Key   Object
 	Value Object
@@ -265,6 +277,7 @@ func (h *Hash) Inspect() string {
 // //////////////////////////////////////////////// //
 // =============== Compiled Function ============== //
 // //////////////////////////////////////////////// //
+
 type CompiledFunction struct {
 	Instructions  code.Instructions
 	NumLocals     int
@@ -277,4 +290,21 @@ func (cf *CompiledFunction) Type() ObjectType {
 
 func (cf *CompiledFunction) Inspect() string {
 	return fmt.Sprintf("CompiledFunction[%p]", cf)
+}
+
+// //////////////////////////////////////////////// //
+// ==================== Closure =================== //
+// //////////////////////////////////////////////// //
+
+type Closure struct {
+	Fn   *CompiledFunction
+	Free []Object
+}
+
+func (c *Closure) Type() ObjectType {
+	return CLOSURE_OBJ
+}
+
+func (c *Closure) Inspect() string {
+	return fmt.Sprintf("Closure[%p]", c)
 }
