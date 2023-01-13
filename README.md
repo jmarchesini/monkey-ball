@@ -43,6 +43,12 @@ engine=vm, result=9227465, duration=5.06227534s`
 engine=eval, result=9227465, duration=22.992759395s`
 ```
 
+### Tests ###
+
+A large part of the code in the book is in the form of unit tests.  You can run the entire test suite with:
+
+`> go test ./...`
+
 ### The Monkey Language ###
 
 Samples of the Monkey language from the unit tests and run in the REPL:
