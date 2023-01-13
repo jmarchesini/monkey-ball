@@ -3,7 +3,47 @@
 An implementation of the Thorsten Ball's Monkey language that comes from the following sources:
 - [Writing An Interpreter In Go](https://interpreterbook.com/) 
 - [Writing a Compiler In Go](https://compilerbook.com/)
-- [The Lost Chapter](https://interpreterbook.com/lost/)
+
+I have not yet implemented 
+[The Lost Chapter](https://interpreterbook.com/lost/).
+
+### Getting Started ###
+
+Once you clone the repo, use the following to build the `monkey` executable from the `monkey-ball` directory:
+
+`> go build -o monkey .`
+
+Monkey can be launched using the interpreter from Ball's first book, or the compiler and vm from his second book.
+To run `monkey` with the compiler/vm engine use:
+
+`> ./monkey -engine=vm`
+
+This is the default and is equivalent to:
+
+`> ./monkey`
+
+To run with the interpreter engine use:
+
+`> ./monkey -engine=eval`
+
+### Benchmark ###
+
+In Chapter 10 of the compiler book, Ball supplies a benchmark to measure the difference in runtime between the interpreter and compiler in the time it takes to calculate `fibonacci(35)`.  To build the benchmark use:
+
+`> go build -o fibonacci ./benchmark`
+
+As above, you can supply the engine argument (defaults to `vm`).
+
+```
+> ./fibonacci
+engine=vm, result=9227465, duration=5.06227534s`
+```
+```
+> ./fibonacci -engine=eval
+engine=eval, result=9227465, duration=22.992759395s`
+```
+
+### The Monkey Language ###
 
 Samples of the Monkey language from the unit tests and run in the REPL:
 
