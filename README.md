@@ -28,7 +28,7 @@ To run with the interpreter engine use:
 
 ### Benchmark ###
 
-In Chapter 10 of the compiler book, Ball supplies a benchmark to measure the difference in runtime between the interpreter and compiler in the time it takes to calculate `fibonacci(35)`.  To build the benchmark use:
+In Chapter 10 of the compiler book, Ball supplies a benchmark to measure the difference in runtime between the interpreter and compiler to calculate `fibonacci(35)`.  To build the benchmark use:
 
 `> go build -o fibonacci ./benchmark`
 
@@ -47,7 +47,21 @@ engine=eval, result=9227465, duration=22.992759395s`
 
 A large part of the code in the book is in the form of unit tests.  You can run the entire test suite with:
 
-`> go test ./...`
+```
+> go test ./...
+?       monkey-ball     [no test files]
+ok      monkey-ball/ast 0.001s
+?       monkey-ball/benchmark   [no test files]
+ok      monkey-ball/code        0.001s
+ok      monkey-ball/compiler    0.002s
+ok      monkey-ball/evaluator   0.002s
+ok      monkey-ball/lexer       0.002s
+ok      monkey-ball/object      0.001s
+ok      monkey-ball/parser      0.002s
+?       monkey-ball/repl        [no test files]
+?       monkey-ball/token       [no test files]
+ok      monkey-ball/vm  0.044s
+```
 
 ### The Monkey Language ###
 
