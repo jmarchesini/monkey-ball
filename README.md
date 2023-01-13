@@ -77,7 +77,7 @@ Samples of the Monkey language from the unit tests and run in the REPL:
 >> h["foo"]
 4
 
->> h["bar]
+>> h["bar"]
 5
 
 >> h["foobar"]

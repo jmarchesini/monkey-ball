@@ -2,6 +2,7 @@ package ast
 
 import (
 	"bytes"
+	"fmt"
 	"monkey-ball/token"
 	"strings"
 )
@@ -24,6 +25,7 @@ type Expression interface {
 // //////////////////////////////////////////////// //
 // =================== Program ==================== //
 // //////////////////////////////////////////////// //
+
 type Program struct {
 	Statements []Statement
 }
@@ -49,6 +51,7 @@ func (p *Program) String() string {
 // //////////////////////////////////////////////// //
 // ================ LetStatement ================== //
 // //////////////////////////////////////////////// //
+
 type LetStatement struct {
 	Token token.Token // the token.LET token
 	Name  *Identifier
@@ -80,6 +83,7 @@ func (ls *LetStatement) String() string {
 // //////////////////////////////////////////////// //
 // ============== ReturnStatement ================= //
 // //////////////////////////////////////////////// //
+
 type ReturnStatement struct {
 	Token       token.Token // the 'return' statement
 	ReturnValue Expression
@@ -108,6 +112,7 @@ func (rs *ReturnStatement) String() string {
 // //////////////////////////////////////////////// //
 // ============ ExpressionStatement =============== //
 // //////////////////////////////////////////////// //
+
 type ExpressionStatement struct {
 	Token      token.Token // the first token of the expr
 	Expression Expression
@@ -130,6 +135,7 @@ func (es *ExpressionStatement) String() string {
 // //////////////////////////////////////////////// //
 // =============== BlockStatement ================= //
 // //////////////////////////////////////////////// //
+
 type BlockStatement struct {
 	Token      token.Token // the '{' token
 	Statements []Statement
@@ -154,6 +160,7 @@ func (bs *BlockStatement) String() string {
 // //////////////////////////////////////////////// //
 // ============== PrefixExpression ================ //
 // //////////////////////////////////////////////// //
+
 type PrefixExpression struct {
 	Token    token.Token // the prefix token e.g., !
 	Operator string
@@ -180,6 +187,7 @@ func (pe *PrefixExpression) String() string {
 // //////////////////////////////////////////////// //
 // =============== InfixExpression ================ //
 // //////////////////////////////////////////////// //
+
 type InfixExpression struct {
 	Token    token.Token // the prefix token e.g., +
 	Left     Expression
@@ -208,6 +216,7 @@ func (ie *InfixExpression) String() string {
 // //////////////////////////////////////////////// //
 // ================= IfExpression ================= //
 // //////////////////////////////////////////////// //
+
 type IfExpression struct {
 	Token       token.Token // the 'if' token
 	Condition   Expression
@@ -240,6 +249,7 @@ func (ie *IfExpression) String() string {
 // //////////////////////////////////////////////// //
 // =============== CallExpression ================= //
 // //////////////////////////////////////////////// //
+
 type CallExpression struct {
 	Token     token.Token // the '(' token
 	Function  Expression  // Identifier or FunctionLiteral
@@ -272,6 +282,7 @@ func (ce *CallExpression) String() string {
 // //////////////////////////////////////////////// //
 // ================== Identifier ================== //
 // //////////////////////////////////////////////// //
+
 type Identifier struct {
 	Token token.Token // the token.IDENT token
 	Value string
@@ -290,6 +301,7 @@ func (i *Identifier) String() string {
 // //////////////////////////////////////////////// //
 // =============== IntegerLiteral ================= //
 // //////////////////////////////////////////////// //
+
 type IntegerLiteral struct {
 	Token token.Token
 	Value int64
@@ -308,6 +320,7 @@ func (il *IntegerLiteral) String() string {
 // //////////////////////////////////////////////// //
 // =============== BooleanLiteral ================= //
 // //////////////////////////////////////////////// //
+
 type Boolean struct {
 	Token token.Token
 	Value bool
@@ -326,10 +339,12 @@ func (b *Boolean) String() string {
 // //////////////////////////////////////////////// //
 // =============== FunctionLiteral ================ //
 // //////////////////////////////////////////////// //
+
 type FunctionLiteral struct {
 	Token      token.Token // the 'fn' token
 	Parameters []*Identifier
 	Body       *BlockStatement
+	Name       string
 }
 
 func (fl *FunctionLiteral) expressionNode() {}
@@ -348,6 +363,11 @@ func (fl *FunctionLiteral) String() string {
 	}
 
 	out.WriteString(fl.TokenLiteral())
+
+	if fl.Name != "" {
+		out.WriteString(fmt.Sprintf("<%s>", fl.Name))
+	}
+
 	out.WriteString("(")
 	out.WriteString(strings.Join(params, ", "))
 	out.WriteString(")")
@@ -359,6 +379,7 @@ func (fl *FunctionLiteral) String() string {
 // //////////////////////////////////////////////// //
 // ================ StringLiteral ================= //
 // //////////////////////////////////////////////// //
+
 type StringLiteral struct {
 	Token token.Token
 	Value string
@@ -377,6 +398,7 @@ func (sl *StringLiteral) String() string {
 // //////////////////////////////////////////////// //
 // ================ ArrayLiteral ================== //
 // //////////////////////////////////////////////// //
+
 type ArrayLiteral struct {
 	Token    token.Token // the '[' token
 	Elements []Expression
@@ -407,6 +429,7 @@ func (al *ArrayLiteral) String() string {
 // //////////////////////////////////////////////// //
 // =============== IndexExpression ================ //
 // //////////////////////////////////////////////// //
+
 type IndexExpression struct {
 	Token token.Token // the '[' token
 	Left  Expression
@@ -434,6 +457,7 @@ func (ie *IndexExpression) String() string {
 // //////////////////////////////////////////////// //
 // ================= HashLiteral ================== //
 // //////////////////////////////////////////////// //
+
 type HashLiteral struct {
 	Token token.Token // the '{' token
 	Pairs map[Expression]Expression
