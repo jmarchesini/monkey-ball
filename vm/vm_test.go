@@ -588,6 +588,30 @@ func TestRecursiveFunctions(t *testing.T) {
 	runVmTests(t, tests)
 }
 
+func TestRecursiveFibonacci(t *testing.T) {
+	tests := []vmTestCase{
+		{
+			input: `
+			let fib = fn(x) {
+				if (x == 0) {
+					return 0;
+				} else {
+					if (x == 1) {
+						return 1;
+					} else {					
+						return fib(x-1) + fib(x-2);
+					}
+				}
+			};
+			fib(15);
+			`,
+			expected: 610,
+		},
+	}
+
+	runVmTests(t, tests)
+}
+
 // //////////////////////////////////////////////// //
 // ==================== Helpers =================== //
 // //////////////////////////////////////////////// //
@@ -604,6 +628,7 @@ func runVmTests(t *testing.T, tests []vmTestCase) {
 			t.Fatalf("compiler error: %s", err)
 		}
 
+		/* Uncomment to dump constants
 		for i, constant := range comp.Bytecode().Constants {
 			fmt.Printf("CONSTANT %d %p (%T):\n", i, constant, constant)
 
@@ -616,6 +641,7 @@ func runVmTests(t *testing.T, tests []vmTestCase) {
 
 			fmt.Printf("\n")
 		}
+		*/
 
 		vm := New(comp.Bytecode())
 		err = vm.Run()
