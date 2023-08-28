@@ -29,6 +29,7 @@ const (
 	HASH_OBJ              = "HASH"
 	COMPILED_FUNCTION_OBJ = "COMPILED_FUNCTION_OBJ"
 	CLOSURE_OBJ           = "CLOSURE"
+	QUOTE_OBJ             = "QUOTE"
 )
 
 // //////////////////////////////////////////////// //
@@ -307,4 +308,20 @@ func (c *Closure) Type() ObjectType {
 
 func (c *Closure) Inspect() string {
 	return fmt.Sprintf("Closure[%p]", c)
+}
+
+// //////////////////////////////////////////////// //
+// ===================== Quote ==================== //
+// //////////////////////////////////////////////// //
+
+type Quote struct {
+	Node ast.Node
+}
+
+func (q *Quote) Type() ObjectType {
+	return QUOTE_OBJ
+}
+
+func (q *Quote) Inspect() string {
+	return "QUOTE(" + q.Node.String() + ")"
 }
