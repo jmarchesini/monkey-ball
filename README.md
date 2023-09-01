@@ -3,9 +3,7 @@
 An implementation of the Thorsten Ball's Monkey language that comes from the following sources:
 - [Writing An Interpreter In Go](https://interpreterbook.com/) 
 - [Writing a Compiler In Go](https://compilerbook.com/)
-
-I have not yet implemented 
-[The Lost Chapter](https://interpreterbook.com/lost/).
+- [The Lost Chapter](https://interpreterbook.com/lost/)
 
 ### Getting Started ###
 
